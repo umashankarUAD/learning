@@ -24,7 +24,27 @@ build:
        name: go build
        code: |
          go build ./...
-         echa "Hello World"
+         echo "Hello World"
+
+   # Test the project
+   - script:
+       name: go test
+       code: |
+         go test ./...
+# Build definition
+mytest-pipeline:
+ # The steps that will be executed on build
+ steps:
+
+   # golint step!
+   - wercker/golint
+
+   # Build the project
+   - script:
+       name: go build
+       code: |
+         go build ./...
+         echo " This is the new pipe line"
 
    # Test the project
    - script:
