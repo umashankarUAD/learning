@@ -1,28 +1,33 @@
-box: alpine
+box:
+ id: golang
+ ports:
+   - "5000"
 
+dev:
+ steps:
+   - internal/watch:
+       code: |
+         go build ./...
+         ./source
+       reload: true
+
+# Build definition
 build:
-  steps:
+ # The steps that will be executed on build
+ steps:
 
-echoa:
-  steps:
-    - script:
-        name: echo AA
-        code: sleep 5 && echo 'AA' > forward.txt
+   # golint step!
+   - wercker/golint
 
-echob:
-  steps:
-    - script:
-        name: echo BBB
-        code: sleep 8 && echo 'BBB' > forward.txt
+   # Build the project
+   - script:
+       name: go build
+       code: |
+         go build ./...
 
-readfile:
-  steps:
-    - script:
-        name: read forward.txt
-        code: cat echoa/forward.txt
-
-readfile2:
-  steps:
-    - script:
-        name: read forward.txt
-        code: cat echob/forward.txt
+   # Test the project
+   - script:
+       name: go test
+       code: |
+         go test ./...
+        
