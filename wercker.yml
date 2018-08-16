@@ -24,7 +24,7 @@ build:
        name: go build
        code: |
          go build ./...
-         echo "Hello World"
+         echa "Hello World"
 
    # Test the project
    - script:
